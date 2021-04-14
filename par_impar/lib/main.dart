@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:par_impar/number_controller.dart';
 
-enum Answer { Even, Odd }
+enum Answer { Even, Odd, Nothing }
 
 void main() {
   runApp(MyApp());
@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final controller = NumberController();
   bool isAnswered = false;
-  var answer;
+  var answer = Answer.Nothing;
 
   @override
   Widget build(BuildContext context) {
@@ -54,26 +54,30 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blueGrey)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.lightBlue[900])),
                   onPressed: () {
-                    answer = Answer.Even;
-                    setState(() {
-                      isAnswered = true;
-                    });
+                    if (answer == Answer.Nothing) {
+                      answer = Answer.Even;
+                      setState(() {
+                        isAnswered = true;
+                      });
+                    }
                   },
                   child: Text('Par'),
                 ),
                 SizedBox(width: 35),
                 ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blueGrey)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.lightBlue[900])),
                   onPressed: () {
-                    answer = Answer.Odd;
-                    setState(() {
-                      isAnswered = true;
-                    });
+                    if (answer == Answer.Nothing) {
+                      answer = Answer.Odd;
+                      setState(() {
+                        isAnswered = true;
+                      });
+                    }
                   },
                   child: Text('Ímpar'),
                 ),
@@ -81,14 +85,36 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             SizedBox(height: 135),
             isAnswered == true
-                ? Text(
-                    answer == Answer.Even
-                        ? controller.evenAnswer
-                        : controller.oddAnswer,
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
+                ? Container(
+                    alignment: Alignment.center,
+                    height: 50.0,
+                    width: 200.0,
+                    decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      border: Border.all(
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 2.0,
+                          offset: Offset(
+                            1,
+                            2,
+                          ),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      answer == Answer.Even
+                          ? controller.evenAnswer
+                          : controller.oddAnswer,
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   )
                 : SizedBox(height: 10),
@@ -98,15 +124,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 setState(() {
                   isAnswered = false;
                   controller.newNumber;
+                  answer = Answer.Nothing;
                 });
               },
               child: Container(
-                width: 75,
+                width: 85,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.refresh),
-                    Text('Restart'),
+                    Text('Reiniciar'),
                   ],
                 ),
               ),
