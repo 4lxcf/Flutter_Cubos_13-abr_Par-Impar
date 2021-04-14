@@ -7,11 +7,7 @@ class NumberController {
     return model.number.toString();
   }
 
-  String get answer {
-    if (model.isEven() == true) {
-      return 'Par';
-    } else {
-      return 'Impar';
-    }
+  String get newNumber {
+    return model.newNumber.toString();
   }
 }

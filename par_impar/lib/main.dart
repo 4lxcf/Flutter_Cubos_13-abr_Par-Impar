@@ -20,9 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -30,6 +28,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final controller = NumberController();
+  bool isAnswered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +40,67 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Numero: ' + controller.number,
+              'O Número [ ${controller.number} ] é:',
               style: TextStyle(
                 fontSize: 26,
               ),
             ),
             SizedBox(height: 35),
-            Text(
-              controller.answer,
-              style: TextStyle(
-                fontSize: 26,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueGrey)),
+                  onPressed: () {
+                    setState(() {
+                      isAnswered = true;
+                    });
+                  },
+                  child: Text('Par'),
+                ),
+                SizedBox(width: 35),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueGrey)),
+                  onPressed: () {
+                    setState(() {
+                      isAnswered = true;
+                    });
+                  },
+                  child: Text('Ímpar'),
+                ),
+              ],
             ),
-            SizedBox(height: 35),
+            SizedBox(height: 135),
+            isAnswered == true
+                ? Text(
+                    'Respondido!',
+                    style: TextStyle(
+                      fontSize: 26,
+                    ),
+                  )
+                : SizedBox(height: 10),
+            SizedBox(height: 135),
             ElevatedButton(
               onPressed: () {
-                setState(() {});
+                setState(() {
+                  isAnswered = false;
+                  controller.newNumber;
+                });
               },
-              child: Text('Restart'),
+              child: Container(
+                width: 75,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.refresh),
+                    Text('Restart'),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
