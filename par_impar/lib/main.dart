@@ -128,12 +128,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               child: Container(
-                width: 85,
+                width: 120,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.refresh),
-                    Text('Reiniciar'),
+                    Text('Novo Número'),
                   ],
                 ),
               ),
