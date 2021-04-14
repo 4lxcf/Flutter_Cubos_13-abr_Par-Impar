@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:par_impar/number_controller.dart';
 
+enum Answer { Even, Odd }
+
 void main() {
   runApp(MyApp());
 }
@@ -29,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final controller = NumberController();
   bool isAnswered = false;
+  var answer;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.blueGrey)),
                   onPressed: () {
+                    answer = Answer.Even;
                     setState(() {
                       isAnswered = true;
                     });
@@ -66,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.blueGrey)),
                   onPressed: () {
+                    answer = Answer.Odd;
                     setState(() {
                       isAnswered = true;
                     });
@@ -77,9 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 135),
             isAnswered == true
                 ? Text(
-                    'Respondido!',
+                    answer == Answer.Even
+                        ? controller.evenAnswer
+                        : controller.oddAnswer,
                     style: TextStyle(
                       fontSize: 26,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
                     ),
                   )
                 : SizedBox(height: 10),
